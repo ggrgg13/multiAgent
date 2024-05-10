@@ -58,7 +58,7 @@ class MAS():
                 Command:
                 If no errors are found, you shall write the instruction "quality" in the first line of your output.
                 If there are errors, you shall write the instruction "program" in the first line of your output, then write instructions for how to correct the errors. 
-                If there is no program, you shall write the instruction "final" in the frist line of your output. Then, write message to indicate program is missing.
+                If there is no program, you shall write the instruction "final" in the first line of your output. Then, write message to indicate program is missing.
                 Code:
                 You shall return the program exactly as-is, with no changes or omissions whatsoever.
                 ```
