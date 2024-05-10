@@ -2,9 +2,8 @@ import os
 from openai import OpenAI
 class MAS():
     def __init__(self, agent):
-        self.agent = os.getenv("Agent1")
         self.agent = agent
-        print(self.agent)
+
     def chat(self, prompt):
         # Initialize the OpenAI client with the provided API key
         client = OpenAI(api_key=self.agent)
@@ -25,6 +24,7 @@ class MAS():
         return response_text
     def manager(self, prompt):
         final_output = False
+        prompt = "program " + prompt
         
         while not final_output:
             print(prompt)
