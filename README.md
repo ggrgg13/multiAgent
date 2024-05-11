@@ -1,34 +1,40 @@
 # multiAgent
 CS-201 final project. Create a multi-agent system for writing program
-Abstract (150 words):
-This project investigates the application of a Multi-Agent System (MAS) to improve the reliability of code generation by Large Language Models (LLMs). The main objective was to establish a system where different agent instances could cross-verify and debug each other’s output, enhancing the overall quality of the generated code. We employed a specialized task delegation strategy that differentiated roles among programming, debugging, and quality control agents. The methodology centered on prompt engineering tailored to each agent’s role, ensuring precise task execution without overlap. Key findings indicate that our MAS effectively reduces error rates and improves code quality compared to single-agent systems. The conclusion suggests that incorporating MAS in LLM applications could significantly benefit software development processes by automating and optimizing code generation and validation.
+## Abstract:
+This project investigates the application of a Multi-Agent System (MAS) to improve the reliability of code generation by Large Language Models (LLMs). The main objective was to establish a system where different agent instances could cross-verify and debug each other’s output, enhancing the overall quality of the generated code. I employed a task delegation strategy that differentiated roles among programming, debugging, and quality control agents. The methodology centered on prompt engineering tailored to each agent’s role, ensuring precise task execution without overlap. 
 
-## Introduction (250 words):
-In recent years, Large Language Models (LLMs) like GPT-3 have revolutionized various domains, including automated code generation. However, these systems often lack self-verification mechanisms, leading to potential errors in the output. To address this limitation, this project explores the use of a Multi-Agent System (MAS) to enhance the accuracy and reliability of code produced by LLMs. MAS consists of multiple intelligent agents interacting to solve complex problems that are challenging for individual agents. The motivation behind this study is to improve the quality of automated code generation by enabling cross-verification among different agents within the system. The scope involves designing a system where agents are specialized in distinct tasks like programming, debugging, and quality control, allowing them to collaboratively refine the code output.
+## Introduction:
+In recent years, Large Language Models like GPT-3 have revolutionized various domains, including automated code generation. However, these systems often lack self-verification mechanisms, leading to sometimes obvious errors in the output. In addition, There is a limited amount of content a chatbot can keep track of at a time, and as the size of a codebase increase, it gets increasinly more difficult to keep track of all code and To address this limitation, this project explores the use of a Multi-Agent System to enhance the accuracy and reliability of code produced by LLMs. MAS consists of multiple intelligent agents interacting to solve complex problems that are challenging for individual agents. The motivation behind this study is to improve the quality of automated code generation by enabling cross-verification among different agents within the system. The scope involves designing a system where agents are specialized in distinct tasks like programming, debugging, and quality control, allowing them to collaboratively refine the code output.
 
-## Literature Review (250 words):
-Existing research on MAS highlights its efficacy in distributed problem-solving and enhancing system reliability through collaborative agent interaction. Studies by Smith and Cohen (2020) show that MAS can effectively distribute tasks based on agent capabilities, leading to optimized problem-solving. However, little research has been conducted on integrating MAS with LLMs for code generation. The gap in literature primarily revolves around the specific application of MAS for debugging and quality assurance in code produced by LLMs. This project aims to fill this gap by developing a framework where MAS is tailored for enhancing LLM outputs.
+## Literature Review:
+Looked at both Gemini and ChatGPT APIs to explore options. ChatGPT's API turned out to be much easier to use, so that's what I went with.
 
-## Data Collection and Preprocessing (250 words):
-For this project, the data consisted of various coding tasks that were simulated to test the MAS framework. We collected examples of common programming tasks and potential errors from existing code repositories and developer forums. The preprocessing involved structuring these tasks into a format suitable for the MAS, where each task was categorized under programming, debugging, or quality control. This structuring was crucial for the proper delegation of tasks to the corresponding agents in the MAS.
+## Data Collection and Preprocessing:
+Not applicable, no data was used.
 
-## Methodology (450 words):
-The methodology involved designing a three-tier MAS where each agent was responsible for a specific aspect of code generation—programming, debugging, or quality control. We developed detailed prompt engineering instructions for each type of agent to ensure accurate and relevant outputs. The programming agents were tasked with generating initial code based on provided specifications. Debugging agents reviewed this code for errors and inconsistencies, while quality control agents assessed the overall quality and suggested improvements if necessary. We employed a cyclical interaction model where each agent's output fed into the next, allowing for iterative enhancement of the code. The system was built using Python and utilized the OpenAI API for integrating LLMs.
+## Methodology:
+The methodology involved designing a three-tier MAS where each agent was responsible for a specific aspect of code generation—programming, debugging, or quality control. I spent the majority of the time on prompt engineering to produce the desired output. The programming agents were tasked with generating initial code based on provided specifications. Debugging agents reviewed this code for errors and inconsistencies, while quality control agents assessed the overall quality and suggested improvements if necessary. If the debugging or quality control agent was not satisfied with the code, it would pass the code back to the programmer agent, along with instructions on how to fix/improve it. The system was built using Python and utilized the OpenAI API for integrating LLMs.
 
-## Experimental Setup (250 words):
-The experimental setup involved simulated coding tasks that were routed through the MAS. Each task was initiated at the programming stage, followed by debugging and quality assessment. We split the data into training and validation sets to fine-tune the agents' performance. The primary evaluation metrics included the error rate reduction and the quality improvement over multiple iterations, measured through automated testing frameworks and manual code review by expert developers.
+The mechanism by which task is delegated to the agents are by telling the agents to append a string to the output: "program", "debug", "quality" and "final". The program parse the output to see which agent produced the output, and which agent to send it to next.
 
-## Results (550 words):
-The results showed a significant reduction in error rates in the code generated by the MAS compared to a baseline single-agent system. Statistical analysis revealed that the error rate decreased by approximately 40% with the introduction of the debugging and quality control agents. Furthermore, the quality scores, as rated by expert developers, were consistently higher for the MAS-generated code, with average scores improving from 6.3 to 8.5 on a 10-point scale. These improvements were most notable in complex coding tasks where traditional LLMs struggled with logical errors and syntactic inaccuracies.
+## Experimental Setup:
+Tested with various prompts to generate code snippets.
+
+## Results:
+The MAS system was able to somewhat reliably debug and improve the quality of the code. Sometimes, it will fail to follow instructions, not returning the code snippet, or mistakenly identifying my syntax seperators as part of the code. Through improving the prompts and using gpt-4 instead of 3.5, these errors were minimized.
 
 ## Discussion (350 words):
-The enhanced performance of the MAS in code generation can be attributed to the effective separation of concerns and the specialized focus of each agent. By allowing separate agents to focus solely on programming, debugging, or quality control, the MAS framework reduces cognitive load and increases the accuracy of each process. Comparing these results with existing literature on MAS applications, it is evident that the tailored use of MAS in LLM environments can overcome some of the common limitations faced by monolithic systems. However, the system does have limitations, particularly in handling extremely novel or ambiguous tasks where the predefined roles might not capture all necessary nuances. Future work could explore more dynamic role definitions and deeper integration with LLM training processes to further enhance adaptability and accuracy.
+The enhanced performance of the MAS in code generation can be attributed to two factors: the the specialized focus of each agent and the ability to double check work by cyclically passing results between agents. By allowing separate agents to focus solely on programming, debugging, or quality control, the MAS framework reduces cognitive load and increases the accuracy of each process. Passing code between agents address one fundamental limitation of LLM, where they cannot directly backtrack and double check their own output halfway through generating a response.
+
+Occasional failures to follow instructions are still unavoidable. Due to the nature of LLMs, there is always a chance for agents to fail to register an instruction.
+
+On a side note, when I asked ChatGPT to improve the prompts, it turns out to be quite bad at prompt engineering. It was not able to produce prompts with better performance than my own.
 
 ## Conclusion and Future Scope (175 words):
-This project demonstrates the potential of Multi-Agent Systems to significantly improve the quality and reliability of code generation by Large Language Models. By implementing a specialized MAS where agents collaboratively program, debug, and perform quality control, we achieved notable improvements in both the accuracy and quality of the generated code. These findings contribute to the broader field of AI and software development, suggesting a viable pathway for integrating MAS into automated code generation workflows. Future research could focus on expanding the capabilities of each agent through advanced machine learning techniques and exploring the application of MAS in other domains of software engineering, such as automated testing and deployment.
-
+There is still limitations, where currently this can only handle one code snippet at a time. A more complex system would be able to store the generated code in memory, swapping code snippets around, effectively allowing a MAS to keep track of an entire repository.
 ## References:
+https://platform.openai.com/docs/overview
 
-Smith, J., & Cohen, P. (2020). Multi-Agent Systems for Distributed Problem Solving: Technical Report. University of Example.
-DeepLearning.AI. (2021). ChatGPT Prompt Engineering for Developers.
-OpenAI API. (2021). Overview.
+https://console.cloud.google.com/
+
+https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/
