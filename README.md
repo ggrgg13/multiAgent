@@ -1,5 +1,8 @@
 # multiAgent
 CS-201 final project. Create a multi-agent system for writing program
+
+### Shiding LIn
+
 ## Abstract:
 This project investigates the application of a Multi-Agent System (MAS) to improve the reliability of code generation by Large Language Models (LLMs). The main objective was to establish a system where different agent instances could cross-verify and debug each other’s output, enhancing the overall quality of the generated code. I employed a task delegation strategy that differentiated roles among programming, debugging, and quality control agents. The methodology centered on prompt engineering tailored to each agent’s role, ensuring precise task execution without overlap. 
 
